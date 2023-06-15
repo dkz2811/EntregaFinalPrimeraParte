@@ -1,19 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HeaderComp titulo="Entrega Vue Cli"/>
+    <NavComp :links="this.navBar" :states="this.visible"/>
+    <RegisterComp v-if="this.visible.RegisterComp" :states="this.visible"/>
+    <LogInComp v-if="this.visible.LogInComp" :states="this.visible"/>
+    <MainCard v-if="this.visible.MainCard" :states="this.visible"/>
+    <CartComp v-if="this.visible.CartComp" :states="this.visible"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import HeaderComp from './components/HeaderComp.vue'
+import NavComp from './components/NavComp.vue'
+import MainCard from './components/MainCard.vue'
+import LogInComp from './components/LogInComp.vue'
+import RegisterComp from './components/RegisterComp.vue'
+import InternalProps from './components/InternalProps.vue'
+import CartComp from './components/CartComp.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  mixins:[InternalProps],
+    components: {
+    HeaderComp,
+    NavComp,
+    MainCard,
+    LogInComp,
+    RegisterComp,
+    CartComp
+  },
+  created(){
   }
-}
+}  
 </script>
 
 <style>
