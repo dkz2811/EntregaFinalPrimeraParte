@@ -98,7 +98,6 @@ export default {
             this.nstate[n] = false;
         }
         this.nstate['MainCard'] = true;
-        console.log(this.nstate)
     },
     onSubmit() {
       if (this.formstate.$valid) {

@@ -36,7 +36,6 @@ export default {
                 this.itemsAdded.push(items);
                 const arrayString = JSON.stringify(this.itemsAdded)
                 localStorage.setItem('cartItems', arrayString)
-                console.log(items)
         },  
     }
 }

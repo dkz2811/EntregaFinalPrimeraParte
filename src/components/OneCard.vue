@@ -15,6 +15,7 @@
         <p class="text-start"> Stock: {{ stock }}</p>
         <p class="text-start" >Precio: ${{ price }}</p>
         <button class="btn btn-success" @click="SubmitEvent">Comprar</button>
+        <div v-if="added"><span>Added to Cart!</span></div>
       </div>
   </div>
 </div>
@@ -26,7 +27,8 @@ export default {
     name: "OneCard",
     data(){
       return {
-        selectedItems:[]
+        selectedItems:[],
+        added: false
       }
     },
     mixins:[InternalProps],
@@ -40,10 +42,13 @@ export default {
             },
             methods:{
               SubmitEvent(){
-                console.log(this)
-                let item = [
-                  {id:this.$attrs.id, model:this.$props.model, price: this.$props.price}]
+                let item = {
+                             id: this.$attrs.id,
+                             model: this.$props.model, 
+                             price: this.$props.price
+                            }
                 this.$emit('getItemsAdded', item)
+                this.added = true;
               }
             }
     }
