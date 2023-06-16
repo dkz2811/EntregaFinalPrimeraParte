@@ -24,10 +24,10 @@ export default {
                 moviles: [
             {
             id: 1,
-            costo: 699,
-            modelo:"Asus Zenfone 9",
+            price: 699,
+            model:"Asus Zenfone 9",
             stock: 10,
-            portada: "azf9.jpg",
+            picture: "azf9.jpg",
             specs: [
                     "Fecha: Released 2022, September 15",
                     "Dimensiones: 169g, 9.1mm thickness",
@@ -44,10 +44,10 @@ export default {
             },
             {
             id: 2,
-            modelo:"Google Pixel 7",
+            model:"Google Pixel 7",
             stock: 10,
-            costo: 599,
-            portada: "gp7.jpg",
+            price: 599,
+            picture: "gp7.jpg",
             specs: ["Fecha: Released 2022, October 13",
                     "Dimensiones: 197g, 8.7mm thickness",
                     "SO: Android 13",
@@ -63,10 +63,10 @@ export default {
             },
             {
             id: 3,
-            modelo:"Google Pixel 7 Pro",
+            model:"Google Pixel 7 Pro",
             stock: 10,
-            costo: 699,
-            portada: "gp7p.jpg",
+            price: 699,
+            picture: "gp7p.jpg",
             specs: [
                     "Fecha: Released 2022, October 13",
                     "Dimensiones: 212g, 8.9mm thickness",
@@ -83,10 +83,10 @@ export default {
             },
             {
             id: 4,
-            modelo:"Apple iPhone 13 mini",
+            model:"Apple iPhone 13 mini",
             stock: 10,
-            costo: 599,
-            portada: "ip13m.jpg",
+            price: 599,
+            picture: "ip13m.jpg",
             specs: [
                     "Fecha: Released 2021, September 24",
                     "Dimensiones: 141g, 7.7mm thickness",
@@ -103,10 +103,10 @@ export default {
             },
             {
             id: 5,
-            modelo:"Apple iPhone 14",
+            model:"Apple iPhone 14",
             stock: 10,
-            costo: 799,
-            portada: "ip14.jpg",
+            price: 799,
+            picture: "ip14.jpg",
             specs: [
                     "Fecha: Released 2022, September 16",
                     "Dimensiones: 172g, 7.8mm thickness",
@@ -123,10 +123,10 @@ export default {
             },
             {
             id: 6,
-            modelo:"Apple iPhone 14 Pro",
+            model:"Apple iPhone 14 Pro",
             stock: 10,
-            costo: 999,
-            portada: "ip14p.jpg",
+            price: 999,
+            picture: "ip14p.jpg",
             specs:[
                     "Fecha: Released 2022, September 16",
                     "Dimensiones: 206g, 7.9mm thickness",
@@ -143,10 +143,10 @@ export default {
             },
             {
             id: 7,
-            modelo:"Nokia 1100",
+            model:"Nokia 1100",
             stock: 10,
-            costo: 10,
-            portada: "n1100.jpg",
+            price: 10,
+            picture: "n1100.jpg",
             specs: [
                     "Fecha: Released 2003, Q3",
                     "Dimensiones: 86g, 20mm thickness",
@@ -163,10 +163,10 @@ export default {
             },
             {
             id: 8,
-            modelo:" Nokia 6300 4",
+            model:" Nokia 6300 4",
             stock: 10,
-            costo: 70,
-            portada: "n6300.jpg",
+            price: 70,
+            picture: "n6300.jpg",
             specs:[
                     "Fecha: Released 2021, January 0",
                     "Dimensiones:  104.7g, 13.7mm thicknes",
@@ -183,10 +183,10 @@ export default {
             },
             {
             id: 9,
-            modelo:"OnePlus 11",
+            model:"OnePlus 11",
             stock: 10,
-            costo: 699,
-            portada: "op11.jpg",
+            price: 699,
+            picture: "op11.jpg",
             specs: [
                     "Fecha: Released 2023, January 09",
                     "Dimensiones: 205g, 8.5mm thickness",
@@ -203,10 +203,10 @@ export default {
             },
             {
             id: 10,
-            modelo:"OnePlus Nord N30",
+            model:"OnePlus Nord N30",
             stock: 10,
-            costo: 299,
-            portada: "opn.jpg",
+            price: 299,
+            picture: "opn.jpg",
             specs: [
                     "Fecha: Released 2023, June 08",
                     "Dimensiones: 195g, 8.3mm thickness",
@@ -223,11 +223,11 @@ export default {
             },
             {
             id: 11,
-            modelo:"Samsung Galaxy A54",
+            model:"Samsung Galaxy A54",
             stock: 10,
             
-            costo: 449,
-            portada: "sa54.jpg",
+            price: 449,
+            picture: "sa54.jpg",
             specs: ["Fecha: Released 2023, March 24",
                     "Dimensiones: 202g, 8.2mm thickness",
                     "SO: Android 13, One UI 5.1",
@@ -243,10 +243,10 @@ export default {
             },
             {
             id: 12,
-            modelo:"Samsung Galaxy S22 Ultra 5G",
+            model:"Samsung Galaxy S22 Ultra 5G",
             stock: 10,
-            costo: 799,
-            portada: "ss22u.jpg",
+            price: 799,
+            picture: "ss22u.jpg",
             specs: ["Fecha: Released 2022, February 25",
                     "Dimensiones: 228g / 229g (mmWave), 8.9mm thickness",
                     "SO: Android 12, up to Android 13, One UI 5.1",
@@ -262,10 +262,10 @@ export default {
             },
             {
             id: 13,
-            modelo:"Sony Xperia 1 V",
+            model:"Sony Xperia 1 V",
             stock: 10,
-            costo: 1399,
-            portada: "sx1v.jpg",
+            price: 1399,
+            picture: "sx1v.jpg",
             specs:[
                 "Fecha: Exp. release 2023, July 28",
                 "Dimensiones: 187g, 8.3mm thickness",
@@ -283,9 +283,6 @@ export default {
         ]
         }
     },
-    methods:{
-
-    }
 }
 </script>
 <style>

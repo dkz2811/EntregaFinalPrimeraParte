@@ -3,9 +3,9 @@
         <div class="row" >
                 <div class="col" v-for="(movil) in this.moviles" :key='movil.id' > 
                                 <OneCard
-                                :modelo="movil.modelo"
-                                :costo="movil.costo"
-                                :portada="movil.portada"
+                                :model="movil.model"
+                                :price="movil.price"
+                                :picture="movil.picture"
                                 :id="movil.id"
                                 :stock="movil.stock"
                                 :specs="movil.specs"
@@ -14,7 +14,6 @@
                                 ></OneCard>
                 </div>
         </div> 
-
         </div>
 </template>
 <script>
@@ -34,11 +33,11 @@ export default {
     },
     methods:{
         getItemsAdded(items){
+                this.itemsAdded.push(items);
+                const arrayString = JSON.stringify(this.itemsAdded)
+                localStorage.setItem('cartItems', arrayString)
                 console.log(items)
-                this.itemsAdded = items;
-                this.addedItems = this.itemsAdded;
-                //console.log(this.addedItems)
-        }
+        },  
     }
 }
 </script>

@@ -4,8 +4,8 @@
     <NavComp :links="this.navBar" :states="this.visible"/>
     <RegisterComp v-if="this.visible.RegisterComp" :states="this.visible"/>
     <LogInComp v-if="this.visible.LogInComp" :states="this.visible"/>
-    <MainCard v-if="this.visible.MainCard" :states="this.visible"/>
-    <CartComp v-if="this.visible.CartComp" :states="this.visible"/>
+    <MainCard v-if="this.visible.MainCard" />
+    <CartComp v-if="this.visible.CartComp"/>
   </div>
 </template>
 
@@ -31,6 +31,8 @@ export default {
     CartComp
   },
   created(){
+  },
+  methods:{
   }
 }  
 </script>

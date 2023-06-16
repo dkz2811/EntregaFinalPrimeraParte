@@ -1,8 +1,8 @@
 <template >
   <div class="card mb-2" style="width: 18rem;">
     <div class="card-body">
-      <h5 class="card-title">{{ modelo }}</h5>
-        <img class="card-img-top" :src="require(`@/assets/img/${portada}`)">
+      <h5 class="card-title">{{ model }}</h5>
+        <img class="card-img-top" :src="require(`@/assets/img/${picture}`)">
       <div >
         <ul class="list-group list-group-flush" v-for="(spec, i) in specs" :key="i">
           <li class="list-group-item">
@@ -13,7 +13,7 @@
       </div>
       <div>
         <p class="text-start"> Stock: {{ stock }}</p>
-        <p class="text-start" >Precio: ${{ costo }}</p>
+        <p class="text-start" >Precio: ${{ price }}</p>
         <button class="btn btn-success" @click="SubmitEvent">Comprar</button>
       </div>
   </div>
@@ -31,19 +31,19 @@ export default {
     },
     mixins:[InternalProps],
             props: {
-                  portada: String,
-                  costo: Number,
-                  modelo:String,
+                  picture: String,
+                  price: Number,
+                  model:String,
                   stock:Number,
                   specs: Array,
                   selected: Array
             },
             methods:{
               SubmitEvent(){
-                //console.log(this.$attrs.id)
-                this.selectedItems.push(this.$attrs.id)
-                this.$emit('getItemsAdded', this.selectedItems)
-                console.log("selectedItems OneCard: "+this.selectedItems)
+                console.log(this)
+                let item = [
+                  {id:this.$attrs.id, model:this.$props.model, price: this.$props.price}]
+                this.$emit('getItemsAdded', item)
               }
             }
     }

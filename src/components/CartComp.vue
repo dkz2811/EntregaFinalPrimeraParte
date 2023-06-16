@@ -1,9 +1,11 @@
 <template >
     <div>
-        <ul v-for="(item, i) in this.addedItems" :key="item">
-            <li>{{ item }}  - {{ i }}</li>
+        <ul v-for="(item,i) in this.moviles" :key="item.id">
+            <li>
+                <span> {{ i }} - {{ item.price }} {{ item.model }}  </span>
+            </li>
         </ul>
-        <span>alala</span>
+        <span>Cart - No hecho</span>
     </div>
 </template>
 <script>
@@ -13,23 +15,23 @@ export default {
     mixins:[InternalProps],
     data(){
         return{
-            nstate:[]
+            nstate:[],
+            list:[]
         }
     },
     props:{
-        states: Object,
-        cartItems:Array
+        cartItems:Array,
+    },
+    created(){
+        this.showList()
     },
     methods:{
-        setState(){
-        this.nstate = this.states;
-        for (let n in this.nstate){
-            this.nstate[n] = false;
+        showList(){
+            const arrayString = localStorage.getItem('cartItems');
+            let array = JSON.parse(arrayString)
+            this.list = array;
+            console.log(this.list)
         }
-        this.nstate['MainCard'] = true;
-        console.log(this.nstate)
-    },
-    },created(){
     }
 
 }

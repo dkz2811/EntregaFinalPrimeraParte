@@ -4,11 +4,11 @@
         <validate tag="label">
         <div class="form-group">
           <label for="email">Email:</label>
-          <input type="email" id="email" v-model="email" required>
+          <input type="email" id="email" v-model="email" required name="email">
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" id="password" v-model="password" required>
+          <input type="password" id="password" v-model="password" required name="password">
         </div>
         </validate>
         <div>
@@ -31,18 +31,17 @@ import InternalProps from './InternalProps.vue';
           },
     data() {
         return {
-            nstate:[{}],
+            nstate:[],
             loginSuccess:false,
             loginError: false,
             formstate:{},
-            registeredUsers:[{}],
+            registeredUsers:[],
             email: "",
             password: "",
         }
     },
     created(){
       this.registeredUsers = this.registerd;
-      console.log(this.loggedin)
     },
     methods: {
       onSubmit(){
@@ -57,7 +56,6 @@ import InternalProps from './InternalProps.vue';
         let foundUser = this.registeredUsers.some(user => user.email === userEmail)
         let foundPassword = this.registeredUsers.some(user => user.password == userPassword)
         if(foundUser && foundPassword){
-          console.log( foundUser +" "+foundPassword)
           this.loginSuccess = true;
           this.loginError = false;
           this.setState()
