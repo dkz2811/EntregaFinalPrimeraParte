@@ -35,14 +35,14 @@ export default {
         this.getDevices()
     },
     mounted(){
-    this.BASE_URL = process.env.VUE_APP_MOCKAPI_SERVICE_URL;
+        this.BASE_URL = process.env.VUE_APP_MOCKAPI_SERVICE_URL;
     },
     methods:{
         getSelectedItem(item){
             store.addProductToShoppingList(item)
         },
         getDevices(){
-            fetch("https://64996d0079fbe9bcf83f3a84.mockapi.io/products")
+            fetch(`${this.BASE_URL}/products`)
             .then(res => res.json())
             .then(devices => {
                 
