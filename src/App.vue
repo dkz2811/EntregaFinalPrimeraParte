@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-    <HeaderComp titulo="Entrega Vue Cli"/>
-    <NavComp :links="this.navBar" :states="this.visible"/>
-    <RegisterComp v-if="this.visible.RegisterComp" :states="this.visible"/>
-    <LogInComp v-if="this.visible.LogInComp" :states="this.visible"/>
-    <MainCard v-if="this.visible.MainCard" />
-    <CartComp v-if="this.visible.CartComp"/>
+    <HeaderComp titulo="Entrega Vue Cli Ecomerce"/>
+    <NavComp/>
+    <router-view/>
   </div>
 </template>
 
@@ -13,26 +10,16 @@
 
 import HeaderComp from './components/HeaderComp.vue'
 import NavComp from './components/NavComp.vue'
-import MainCard from './components/MainCard.vue'
-import LogInComp from './components/LogInComp.vue'
-import RegisterComp from './components/RegisterComp.vue'
-import InternalProps from './components/InternalProps.vue'
-import CartComp from './components/CartComp.vue'
+import store from './store'
 
 export default {
   name: 'App',
-  mixins:[InternalProps],
     components: {
     HeaderComp,
     NavComp,
-    MainCard,
-    LogInComp,
-    RegisterComp,
-    CartComp
   },
   created(){
-  },
-  methods:{
+    store.getDevices(); 
   }
 }  
 </script>

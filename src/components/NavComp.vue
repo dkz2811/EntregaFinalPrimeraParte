@@ -1,45 +1,38 @@
 <template>
-    <div>
-        <ul class="nav justify-content-end" 
-          v-for="link in links" :key="link.comp">
-            <li class="nav-item">
-                  <a class="nav-link" :id="link.comp" @click.capture="handClick(link.comp)" href="#" >{{ link.title }}</a>
-            </li>
-        </ul>
-    </div>
+    <div class="mb-3">
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav v-for="link in links" :key="link.comp">
+                <b-nav-item>
+                    <router-link  v-if="link.visible"
+                    class="nav-link active" 
+                    :to="link.to"><ALabel 
+                    :title="link.title " 
+                    :value="link.value"/>
+                </router-link>
+            </b-nav-item>
+        </b-navbar-nav>
+    </b-collapse>
+</b-navbar>
+</div>   
 </template>
 <script>
-
-import InternalProps from './InternalProps.vue';
+//https://bootstrap-vue.org/docs/components/navbar
+import ALabel from './ALabel.vue';
+import store from '../store';
 
 export default {
     name:"NavComp",
-    mixins:[InternalProps],
+    components:{
+        ALabel
+    },
     data(){
         return{
-            nstate:[{}]
-        }
-    },
-    created(){
-    },
-    props:{
-        links:Array,
-        states:Object
-    },
-    methods:{
-        handClick(clicked){
-            this.setState(clicked)
-        },
-        setState(component){
-           this.nstate = this.states;
-            for (let n in this.nstate){
-                this.nstate[n] = false;
-            }
-            this.nstate[component] = true;
+            links: store.state.navBar,
         }
     }
 }
 </script>
 <style>
-    
 </style>

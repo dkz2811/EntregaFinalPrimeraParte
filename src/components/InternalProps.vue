@@ -17,10 +17,12 @@ export default {
             ],
             visible:{ "RegisterComp":false, "LogInComp":false ,"HeaderComp":false,"MainCard":true, "CartComp":false},
             navBar:[
-                {title: "Store",comp:"MainCard"},
-                {title: "Register",comp:"RegisterComp"},
-                {title:"Log In",comp: "LogInComp"},
-                {title:"Cart",comp: "CartComp"}],
+                        {title: "Store",comp:"MainCard", to:"/", visible:true},
+                        {title: "Register",comp:"RegisterComp", to:"/register", visible:true},
+                        {title:"Log In",comp: "LogInComp", to:"/log-in", visible:true},
+                        {title:"Cart",comp: "CartComp", to: "/shopping-cart", value: 0, visible:true},
+                        {title:"ProductMgm", comp: "CrudProduct", to: "/product-mgm", visible:true}
+                ],
                 moviles: [
             {
             id: 1,
@@ -225,7 +227,6 @@ export default {
             id: 11,
             model:"Samsung Galaxy A54",
             stock: 10,
-            
             price: 449,
             picture: "sa54.jpg",
             specs: ["Fecha: Released 2023, March 24",

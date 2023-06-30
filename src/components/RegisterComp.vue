@@ -6,12 +6,12 @@
                     <validate tag="label">
                         <div class="intput-group mb-3">
                             <div class="input-grou-prepend">
-                            <span class="input-group-text" >Name</span>
+                                <span class="input-group-text" >Name</span>
                             </div>
-                            <input type="text" class="form-control" v-model="user.name" placeholder="enter name" required name="name">
-                                <field-messages name="name" show="$touched">
-                                    <div slot="required"> Name required </div>
-                                </field-messages>
+                            <input type="text" class="form-control" v-model="user.name" autocomplete="enter name" required name="name">
+                            <field-messages name="name" show="$touched">
+                                <div slot="required"> Name required </div>
+                            </field-messages>
                         </div>
                     </validate>
                 </div>
@@ -21,11 +21,11 @@
                             <div class="input-grou-prepend">
                                 <span class="input-group-text" >Email</span>
                             </div>
-                        <input type="text" class="form-control" v-model="user.email" placeholder="enter email" required name="email">
-                        <field-messages name="email" show="$touched">
+                            <input type="text" class="form-control" v-model="user.email" autocomplete="enter email" required name="email">
+                            <field-messages name="email" show="$touched">
                                 <div slot="required">Email required</div>
-                        </field-messages>
-                    </div>
+                            </field-messages>
+                        </div>
                     </validate>
                 </div>
                 <div class="form-group">
@@ -33,12 +33,12 @@
                         <div class="intput-group mb-3">
                             <div class="input-grou-prepend">
                                 <span class="input-group-text" >Enter password</span>
+                            </div> 
+                            <input type="password" class="form-control" v-model="user.password" autocomplete="enter password" required name="password1">
+                            <field-messages name="password1" show="$touched">
+                                <div slot="check-password">Password must have 8 or more characters, one or more uppercase, one or more lowercase one or more numbers</div>
+                            </field-messages>
                         </div> 
-                        <input type="password" class="form-control" v-model="user.password1" placeholder="enter password" required name="password1">
-                        <field-messages name="password1" show="$touched">
-                            <div slot="check-password">Password must have 8 or more characters, one or more uppercase, one or more lowercase one or more numbers</div>
-                        </field-messages>
-                    </div> 
                     </validate>
                 </div>
                 <div class="form-group">
@@ -47,89 +47,99 @@
                             <div class="input-grou-prepend">
                                 <span class="input-group-text" >Enter password</span>
                             </div>          
-                        <input type="password" class="form-control" v-model="user.password2" placeholder="re-enter password" required name="password2">
-                        <field-messages name="password2" show="$touched" >
+                            <input type="password" class="form-control" v-model="user.password2" autocomplete="re-enter password" required name="password2">
+                            <field-messages name="password2" show="$touched" >
                                 <div slot="check-password">Password required</div>
                                 <div slot="password-coincide">Passwords must be identical</div>
-                        </field-messages>
-                    </div> 
+                            </field-messages>
+                        </div> 
                     </validate>
                 </div>  
                 <div v-if="alreadyRegistered"><span>This email is already registered</span></div>
                 <div v-if="successRegister"><span>Success!</span></div>
-                <button class="btn btn-success mt-3" type="submit">Send</button>
+                <button class="btn btn-success mt-3" type="submit" :disabled="isLoading">Send</button>
             </div>
         </vue-form>
     </div>
 </template>
 <script>
-import InternalProps from './InternalProps.vue';
+import store from '../store';
 
 export default {
     name:"RegisterComp",
-    mixins:[InternalProps],
     props:{
-        users:{},
+        users:Array,
         states:Object
     },
     data(){
         return{
-            nstate:[{}],
+            BASE_URL: process.env.VUE_APP_MOCKAPI_SERVICE_URL,
             alreadyRegistered:false,
             successRegister:false,
             formstate:{},
-            registeredUsers:[{}],
+            registeredUsers:[],
+            isLoading:false,
             user:
-                {   
-                    name:"",
-                    email:"",
-                    password1:"",
-                },
+            {   
+                name:"",
+                email:"",
+                password:"",
+                isAdmin:false
+            },
             password2 :"",
         };
     },
-    created(){
-        this.registeredUsers = this.registerd
+    mounted(){
+    this.BASE_URL = process.env.VUE_APP_MOCKAPI_SERVICE_URL;
     },
     methods: {
-    setState(){
-        this.nstate = this.states;
-        for (let n in this.nstate){
-            this.nstate[n] = false;
-        }
-        this.nstate['MainCard'] = true;
-    },
-    onSubmit() {
-      if (this.formstate.$valid) {
-            return this.registerUser(this.user);
-      }
-    },
-    checkPassword(value) {
-      return /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
-        value
-      );
-    },
-    passwordCoincide(value) {
-      return this.user.password1 === value;
-    },
-    userExists(anUser){
-        const newUserEmail = anUser.email 
-        let foundUser = this.registeredUsers.some(user => user.email === newUserEmail)
-        return foundUser
-    },
-    registerUser(anUser){
-       if(!this.userExists(anUser)){
-        this.registeredUsers.push({name: anUser.name, email : anUser.email, password: anUser.password1})
-        this.alreadyRegistered = false
-        this.successRegister = true
-        this.setState()
-       }else{
-        this.alreadyRegistered = true; 
-        this.successRegister = false; 
-       }
+        onSubmit() {
+            if(this.formstate.$valid){
+                //this.registerUser();
+                this.isLoading = true;
+                this.userExists();
+            }
+        },
+        checkPassword(value) {
+            return /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(
+            value
+            );
+        },
+        passwordCoincide(value) {
+            return this.user.password === value;
+        },
+        userExists(){
+            fetch(`${this.BASE_URL}/users`)
+            .then(res => res.json())
+            .then(users => {
+                this.registeredUsers = users
+                let user = this.registeredUsers.find(user => user.email === this.user.email)
+                console.log("user => UserExists", user ? "already registered" : "not registered" )
+                user ? this.alreadyRegistered = true : this.registerUser()
+            }).catch(err => console.log(err))
+            .finally(() => this.isLoading = false )
+        },
+        registerUser(){
+            fetch(`${this.BASE_URL}/users`, {
+                method: "POST",
+                body: JSON.stringify({name:this.user.name, email:this.user.email, password: this.user.password} ),
+                headers: {"Content-type": "application/json"}})
+                .then(res => res.json())
+                .then(user => {
+                    console.log("user => RegisterUser", user)
+                    this.registeredUsers.push(user)
+                    this.alreadyRegistered = false
+                    this.successRegister = true
+                    store.setUser(user)
+                    this.$router.push(user.isAdmin ? "/product-mgm" : "/")
+                }).catch(err => console.log(err))
+                .finally(() => {
+                    this.isLoading = false;
+                    this.successRegister = false; 
+                })
+            }
+        },
     }
-  }
-}
 </script>
 <style>
 .login-container {
@@ -137,5 +147,5 @@ export default {
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-  }
+}
 </style>

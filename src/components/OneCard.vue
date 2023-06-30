@@ -1,60 +1,80 @@
 <template >
   <div class="card mb-2" style="width: 18rem;">
-    <div class="card-body">
+    <div class="card-body" >
       <h5 class="card-title">{{ model }}</h5>
-        <img class="card-img-top" :src="require(`@/assets/img/${picture}`)">
+      
+      <img class="card-img-top" :src="picture" :alt="model">
+      <p class="text-start" >Precio: ${{ price }}</p>
+      <div>
+        <p class="text-start" v-if="this.item.stock > 0"> Stock: {{ this.item.stock }}</p>
+        <p class="text-start text-danger" v-else > Out of stock</p>
+        <p class="text-start" v-if="button === 'Modify'">ID: {{ id }}</p>
+      </div>
+      <button class="btn btn-success mt-3" :disabled="this.item.stock < 1 && button !== 'Modify' ? true : false" @click="SubmitEvent">{{button}}</button>
       <div >
-        <ul class="list-group list-group-flush" v-for="(spec, i) in specs" :key="i">
-          <li class="list-group-item">
-            <p class="text-start">
-            {{ spec }}
-          </p></li>
+        <ul class="list-group list-group-flush" v-for="(spec, i) in devSpecs" :key="i">
+          <li class="list-group-item">{{ spec }}</li>
         </ul>
       </div>
-      <div>
-        <p class="text-start"> Stock: {{ stock }}</p>
-        <p class="text-start" >Precio: ${{ price }}</p>
-        <button class="btn btn-success" @click="SubmitEvent">Comprar</button>
-        <div v-if="added"><span>Added to Cart!</span></div>
-      </div>
+    </div>
   </div>
-</div>
 </template>
 <script>
-import InternalProps from './InternalProps.vue'
 
 export default {
-    name: "OneCard",
-    data(){
-      return {
-        selectedItems:[],
-        added: false
+  name: "OneCard",
+  data(){
+    return {
+      devSpecs:"",
+      item:{
+        id:0,
+        model:"",
+        price:0,
+        stock:0,
       }
-    },
-    mixins:[InternalProps],
-            props: {
-                  picture: String,
-                  price: Number,
-                  model:String,
-                  stock:Number,
-                  specs: Array,
-                  selected: Array
-            },
-            methods:{
-              SubmitEvent(){
-                let item = {
-                             id: this.$attrs.id,
-                             model: this.$props.model, 
-                             price: this.$props.price
-                            }
-                this.$emit('getItemsAdded', item)
-                this.added = true;
-              }
-            }
     }
+  },
+  props: {
+    button: String,
+    id: String,
+    picture: String,
+    price: Number,
+    model:String,
+    stock:Number,
+    brand:String,
+    specs: String,
+  },
+  created(){
+    this.devSpecs = this.specs.split(',')
+    this.item.stock = this.stock;
+  },
+  methods:{
+    SubmitEvent(){
+      
+      if(this.button === "Add to Cart")
+      {
+        this.item.stock -= 1;
+        let item = { id: this.id, model: this.model, price: this.price}
+        this.$emit('getSelectedItem', item)
+      }
+      if (this.button === 'Modify'){
+        let item = { 
+          id: this.id, 
+          model: this.model,
+          price: this.price,
+          picture: this.picture,
+          stock: this.stock,
+          brand: this.brand,
+          specs: this.specs}
+          this.$emit('getSelectedItem', item)
+        }
+        
+      }
+    }
+  }
 </script>
 
-<style >
+<style scoped>
 img {
   border-radius: 5px 5px 0 0;
   width: 100%;
@@ -66,6 +86,8 @@ img {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   border-radius: 5px; /* 5px rounded corners */ 
+  max-height: auto;
+  min-height: auto;
 }
 
 </style>

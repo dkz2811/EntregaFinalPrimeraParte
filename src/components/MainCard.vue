@@ -1,41 +1,62 @@
 <template >
     <div class="container">
-        <div class="row" >
-                <div class="col" v-for="(movil) in this.moviles" :key='movil.id' > 
-                                <OneCard
-                                :model="movil.model"
-                                :price="movil.price"
-                                :picture="movil.picture"
-                                :id="movil.id"
-                                :stock="movil.stock"
-                                :specs="movil.specs"
-                                :selected="itemsAdded"
-                                @getItemsAdded="getItemsAdded"
-                                ></OneCard>
-                </div>
+        <div class="row">
+            <div class="col" v-for="(dev) in this.devices" :key='dev.id'> 
+                <OneCard
+                button="Add to Cart"
+                :model="dev.model"
+                :price="dev.price"
+                :picture="dev.picture"
+                :id="dev.id"
+                :stock="dev.stock"
+                :specs="dev.specs"
+                @getSelectedItem="getSelectedItem"
+                ></OneCard>
+            </div>
         </div> 
-        </div>
+    </div>
 </template>
 <script>
 import OneCard from './OneCard.vue'
-import InternalProps from './InternalProps.vue';
+import store from '../store'
 
 export default {
     name: 'MainCard',
-    mixins:[InternalProps],
     components: {
-                    OneCard,
-                },
+        OneCard,
+    },
     data(){
         return{
-                itemsAdded:[]
+            devices:[],
+            BASE_URL: process.env.VUE_APP_MOCKAPI_SERVICE_URL,
         }
     },
+    created(){
+        this.getDevices()
+    },
+    mounted(){
+    this.BASE_URL = process.env.VUE_APP_MOCKAPI_SERVICE_URL;
+    },
     methods:{
-        getItemsAdded(items){
-                this.itemsAdded.push(items);
-                const arrayString = JSON.stringify(this.itemsAdded)
-                localStorage.setItem('cartItems', arrayString)
+        getSelectedItem(item){
+            store.addProductToShoppingList(item)
+        },
+        getDevices(){
+            fetch("https://64996d0079fbe9bcf83f3a84.mockapi.io/products")
+            .then(res => res.json())
+            .then(devices => {
+                
+                let stockedDevices = devices.slice();
+                let shoppingList = store.getShoppingList();
+                for ( let device in stockedDevices){
+                    for ( let item in shoppingList){
+                        if (stockedDevices[device].id === shoppingList[item].id){
+                            stockedDevices[device].stock -= 1;
+                        }
+                    }
+                }
+                this.devices = stockedDevices.slice();
+            })
         },  
     }
 }
